@@ -1,0 +1,18 @@
+$sourceGroup = 'Test Group 1'
+$destinationGroup = 'Test Group 2'
+$sourceMembers = Get-ADGroupMember -Identity $sourceGroup
+
+Write-Host 'Source members:' -ForegroundColor Green
+$sourceMembers | Select -ExpandProperty SamAccountName
+
+Write-Host "`nExisting members in destination group:" -ForegroundColor Green
+Get-ADGroupMember -Identity $destinationGroup | Select -ExpandProperty SamAccountName
+
+Write-Host "`nRemoving all members from destination group." -ForegroundColor Red
+Remove-ADGroupMember -Identity $destinationGroup -Members (Get-ADGroupMember -Identity $destinationGroup) -Confirm:$false
+
+Write-Host "`nAdd source members to destination group." -ForegroundColor Green
+Add-ADGroupMember -Identity $destinationGroup -Members $sourceMembers
+
+Write-Host "`nCurrent membership of destination group:" -ForegroundColor Green
+Get-ADGroupMember -Identity $destinationGroup | Select -ExpandProperty SamAccountName
