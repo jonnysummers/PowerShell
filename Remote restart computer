@@ -1,0 +1,7 @@
+# Establish connection
+Enable-PSremoting
+$computers = NewPSSession -ComputerName YourComputer, TargetComputer
+# verify that connection is established
+$computers
+# Remote restart
+Restart-Computer -ComputerName TargetComputer -Wait -For PowerShell -Timeout 300 -Delay 2
