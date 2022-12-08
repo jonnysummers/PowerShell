@@ -1,0 +1,1 @@
+Get-Printer | Select-Object Name, ComputerName, Type, DriverName, Shared, Published | Out-GridView
